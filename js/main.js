@@ -125,7 +125,13 @@ app.controller('ContactCtrl', function($state, $stateParams, $scope, $localStora
     $('.contact-validation-shadowbox').fadeOut(300);
   }
   $scope.deleteContact = function(){
-    var index = ContactsData.findIndex(x => x.id == $scope.contact.id);
+    //var index = ContactsData.findIndex(x => x.id == $scope.contact.id);
+    var index = ContactsData.findIndex(function(x){
+      if(x.id == $scope.contact.id){
+        return x;
+      }
+    });
+    console.log(index);
     ContactsData.splice(index,1);
     $state.go('list');
   }
@@ -231,7 +237,11 @@ app.controller('AddEditCtrl', function($state, $stateParams, $scope, $localStora
 
 
       //console.log($scope.contact.id);
-      var index = ContactsData.findIndex(x => x.id == $scope.contact.id);
+      var index = ContactsData.findIndex(function(x){
+        if(x.id == $scope.contact.id){
+          return x;
+        }
+      });
       //console.log(ContactsData);
       //console.log(index)
       if(index > -1){

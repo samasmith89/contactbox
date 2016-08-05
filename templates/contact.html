@@ -1,0 +1,67 @@
+<div class="page page-contact anim-zoom-out">
+
+  <!-- deletion popup -->
+  <div class="contact-validation-shadowbox">
+    <div class="contact-validation-shadowbox-inner">
+      <div class="contact-validation-popup">
+        <div class="contact-validation-popup-message">Are you sure you want to delete this contact?</div>
+        <div class="contact-validation-popup-delete-btns">
+          <div class="contact-validation-popup-cancel"><span ng-click="cancelPopup()">CANCEL</span></div>
+          <div class="contact-validation-popup-delete"><span ng-click="deleteContact()">DELETE</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-top-section">
+    <div class="contact-top-section-inner">
+      <div class="contact-top-section-content">
+        <img class="contact-top-section-avatar" ng-if="contact.photo == ''" src="img/placeholder_avatar_new.svg" onerror="this.onerror=null;this.src='img/placeholder_avatar_new.png';"/>
+        <img class="contact-top-section-avatar" ng-if="contact.photo != ''" ng-src="{{contact.photo}}" onerror="this.onerror=null;this.src='img/placeholder_avatar_new.png';"/>
+        <div class="contact-top-section-name"><span ng-bind="contact.fname + ' ' + contact.lname"</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-data-section">
+    <div class="contact-data-row">
+      <div class="contact-data-row-label">
+        <div class="contact-data-row-label-icon">
+          <img src="img/icon_company.svg" onerror="this.onerror=null;this.src='img/icon_company.png';" alt="company">
+        </div>
+        <div class="contact-data-row-label-text">Company:</div>
+      </div>
+      <div class="contact-data-row-value">
+          <span ng-if="contact.company == ''" class="contact-data-row-value-empty">---</span>
+          <span ng-if="contact.company != ''" ng-bind="contact.company"></span>
+      </div>
+    </div>
+
+    <div class="contact-data-row">
+      <div class="contact-data-row-label">
+        <div class="contact-data-row-label-icon">
+          <img src="img/icon_phone.svg" onerror="this.onerror=null;this.src='img/icon_phone.png';" alt="phone">
+        </div>
+        <div class="contact-data-row-label-text">Phone:</div>
+      </div>
+      <div class="contact-data-row-value">
+          <span ng-if="contact.phone == ''" class="contact-data-row-value-empty">---</span>
+          <a ng-if="contact.phone != ''" ng-href="tel:{{cleanPhone}}" ng-bind="contact.phone"></a>
+      </div>
+    </div>
+
+    <div class="contact-data-row">
+      <div class="contact-data-row-label">
+        <div class="contact-data-row-label-icon">
+          <img src="img/icon_email.svg" onerror="this.onerror=null;this.src='img/icon_email.png';" alt="email">
+        </div>
+        <div class="contact-data-row-label-text">Email:</div>
+      </div>
+      <div class="contact-data-row-value">
+          <span ng-if="contact.email == ''" class="contact-data-row-value-empty">---</span>
+          <a ng-if="contact.email != ''" ng-href="mailto:{{contact.email}}" ng-bind="contact.email"></a>
+      </div>
+    </div>
+  </div>
+
+</div>

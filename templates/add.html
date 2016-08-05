@@ -1,0 +1,97 @@
+<div class="page page-add anim-zoom-out">
+
+  <!-- image cropper -->
+  <div class="contact-image-crop-cover"></div>
+  <div class="contact-image-crop">
+    <img-crop image="myImage" result-image="myCroppedImage" result-image-size="92" class="contact-image-crop-area"></img-crop>
+    <div class="contact-image-crop-header">
+      <div class="contact-image-crop-header-left">
+
+      </div>
+      <<div class="contact-image-crop-header-right">
+        <div class="header-bar-button-save ripple-btn" ng-click="hideCropper()">
+          <img src="img/icon_checkmark.svg" onerror="this.onerror=null;this.src='img/icon_checkmark.png';" alt="crop">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- validation popup -->
+  <div class="contact-validation-shadowbox">
+    <div class="contact-validation-shadowbox-inner">
+      <div class="contact-validation-popup">
+        <div class="contact-validation-popup-message">You must provide a full name</div>
+        <div class="contact-validation-popup-dismiss"><span ng-click="dismissPopup()">GOT IT</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- page content -->
+  <div class="contact-page-content">
+    <!-- top section -->
+    <div class="contact-top-section">
+      <div class="contact-top-section-inner">
+        <div class="contact-top-section-content">
+          <!--<img src="img/placeholder_avatar_new.svg" onerror="this.onerror=null;this.src='img/placeholder_avatar_new.png';" alt="upload image"><br/>-->
+          <img class="contact-top-section-avatar" ng-if="!cropped" src="img/placeholder_avatar_new.svg" onerror="this.onerror=null;this.src='img/placeholder_avatar_new.png';"/>
+          <img class="contact-top-section-avatar" ng-if="cropped" ng-src="{{myCroppedImage}}" onerror="this.onerror=null;this.src='img/placeholder_avatar_new.png';" /><br/>
+          <input type="file" id="add-photo-btn" name='crop_file' onchange="angular.element(this).scope().showCropper()"/>
+          <label for="add-photo-btn" class="contact-top-section-avatar-edit-btn">
+            <img src="img/icon_camera.svg" onerror="this.onerror=null;this.src='img/icon_camera.png';" alt="upload">
+            <span>upload photo</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-data-section">
+      <div class="contact-data-row">
+        <div class="contact-data-row-label">
+          <div class="contact-data-row-label-icon">
+            <img src="img/icon_user.svg" onerror="this.onerror=null;this.src='img/icon_userz.png';" alt="company">
+          </div>
+          <div class="contact-data-row-label-text">Name:</div>
+        </div>
+        <div class="contact-data-row-value">
+            <input name="add_name" type="text" placeholder="ex. Jon Doe" ng-model="contact.fullName"/>
+        </div>
+      </div>
+
+      <div class="contact-data-row">
+        <div class="contact-data-row-label">
+          <div class="contact-data-row-label-icon">
+            <img src="img/icon_company.svg" onerror="this.onerror=null;this.src='img/icon_company.png';" alt="company">
+          </div>
+          <div class="contact-data-row-label-text">Company:</div>
+        </div>
+        <div class="contact-data-row-value">
+            <input name="add_company" type="text" placeholder="ex. EggSample Inc." ng-model="newContact.company"/>
+        </div>
+      </div>
+
+      <div class="contact-data-row">
+        <div class="contact-data-row-label">
+          <div class="contact-data-row-label-icon">
+            <img src="img/icon_phone.svg" onerror="this.onerror=null;this.src='img/icon_phone.png';" alt="phone">
+          </div>
+          <div class="contact-data-row-label-text">Phone:</div>
+        </div>
+        <div class="contact-data-row-value">
+          <input name="add_phone" type="text" placeholder="ex. 214-555-1234" ng-model="newContact.phone"/>
+        </div>
+      </div>
+
+      <div class="contact-data-row">
+        <div class="contact-data-row-label">
+          <div class="contact-data-row-label-icon">
+            <img src="img/icon_email.svg" onerror="this.onerror=null;this.src='img/icon_email.png';" alt="email">
+          </div>
+          <div class="contact-data-row-label-text">Email:</div>
+        </div>
+        <div class="contact-data-row-value">
+          <input name="add_email" type="text" placeholder="ex. jon@eggsample.com" ng-model="newContact.email"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<nav class="header-bar">
+
+  <!-- list header -->
+  <div ng-show="$state.includes('list')">
+    <div class="header-bar-content">
+      <div class="header-bar-title">Contacts</div>
+      <div class="header-bar-buttons">
+        <div class="header-bar-button-search ripple-btn" ng-click="search.showBar()">
+          <img src="img/icon_search.svg" onerror="this.onerror=null;this.src='img/icon_search.png';" alt="search contacts">
+        </div>
+        <div class="header-bar-button-add ripple-btn" ui-sref="add">
+          <img src="img/icon_plus.svg" onerror="this.onerror=null;this.src='img/icon_plus.png';" alt="add contact">
+        </div>
+      </div>
+    </div>
+    <div class="header-bar-search">
+      <input type="text" placeholder="Search Contacts..." ng-model="search.query"/>
+      <div class="header-bar-search-x" ng-click="search.hideBar()">
+        <img src="img/icon_search_x.svg" onerror="this.onerror=null;this.src='img/icon_search_x.png';" alt="cancel">
+      </div>
+    </div>
+  </div>
+
+  <!-- contact header -->
+  <div ng-show="$state.includes('contact')">
+    <div class="header-bar-content">
+      <div class="header-bar-buttons-left">
+        <div class="header-bar-button-back ripple-btn" ng-click="" ui-sref="list">
+          <img src="img/icon_back.svg" onerror="this.onerror=null;this.src='img/icon_back.png';" alt="back">
+        </div>
+      </div>
+      <<div class="header-bar-buttons">
+        <div class="header-bar-button-edit ripple-btn" ng-click="editContact()">
+          <img src="img/icon_edit.svg" onerror="this.onerror=null;this.src='img/icon_edit.png';" alt="edit contact">
+        </div>
+        <div class="header-bar-button-delete ripple-btn" ng-click="deletePopup()">
+          <img src="img/icon_trash.svg" onerror="this.onerror=null;this.src='img/icon_trash.png';" alt="delete contact">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- add header -->
+  <div ng-show="$state.includes('add')">
+    <div class="header-bar-content">
+      <div class="header-bar-buttons-left">
+        <div class="header-bar-button-back ripple-btn" ng-click="" ui-sref="list">
+          <img src="img/icon_back.svg" onerror="this.onerror=null;this.src='img/icon_back.png';" alt="back">
+        </div>
+        <div class="header-bar-title header-bar-title-no-padding">Add Contact</div>
+      </div>
+      <<div class="header-bar-buttons">
+        <div class="header-bar-button-save ripple-btn" ng-click="addContact()">
+          <img src="img/icon_checkmark.svg" onerror="this.onerror=null;this.src='img/icon_checkmark.png';" alt="save contact">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit header -->
+  <div ng-show="$state.includes('edit')">
+    <div class="header-bar-content">
+      <div class="header-bar-buttons-left">
+        <div class="header-bar-button-back ripple-btn" ng-click="editBack()">
+          <img src="img/icon_back.svg" onerror="this.onerror=null;this.src='img/icon_back.png';" alt="back">
+        </div>
+        <div class="header-bar-title header-bar-title-no-padding">Edit Contact</div>
+      </div>
+      <<div class="header-bar-buttons">
+        <div class="header-bar-button-save ripple-btn" ng-click="addContact()">
+          <img src="img/icon_checkmark.svg" onerror="this.onerror=null;this.src='img/icon_checkmark.png';" alt="save contact">
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="header-spacer"></div>

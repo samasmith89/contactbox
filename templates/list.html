@@ -1,0 +1,12 @@
+<div class="page page-list anim-zoom-out">
+
+  <div ng-repeat="contact in contacts | filter: search.run | orderBy: 'fname'" class="list-item ripple-btn" data-ripple-color="#e5e5e5" ng-click="loadContact(contact)">
+    <div class="list-item-avatar">
+      <img ng-if="contact.photo == ''" src="img/placeholder_avatar_new.svg" onerror="this.onerror=null;this.src='img/placeholder_avatar_new.png';"/>
+      <img ng-if="contact.photo != ''" ng-src="{{contact.photo}}"/>
+    </div>
+    <div class="list-item-text">
+      <div class="list-item-text-name"><span ng-bind="contact.fname + ' ' + contact.lname"</span></div>
+      <div class="list-item-text-company"><span ng-bind="contact.company"</span></div>
+  </div>
+</div>

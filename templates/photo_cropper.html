@@ -1,0 +1,520 @@
+<style>
+.photo-uploader-shadow-box {
+	display: none; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;
+	text-align: center; background-color: rgba(0,0,0,0.8); z-index: 9999;
+}
+
+.photo-uploader-buttons {
+	display: block; margin: auto; margin-top: 50px; left: 0%; right: 0%; background-color: #ffffff; max-width: 400px; width: 90%;
+	-moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; overflow: hidden;
+}
+.photo-uploader-btn-label {
+	display: block; padding: 15px; border-bottom: solid 1px #d0d0d0;
+	color: #525252; background-color: #EFEFEF; font-size: 14px; line-height: 18px;
+}
+.photo-uploader-btn{ position: relative; overflow: hidden; }
+.photo-uploader-btn label {
+	display: block; padding: 20px; font-size: 14px; color: #525252; font-weight: 700;
+	border-bottom: solid 1px #d0d0d0; cursor: pointer; text-transform: uppercase;
+}
+.photo-uploader-btn label:hover {
+	background-color: #fafafa;
+}
+.photo-uploader-btn label:active {
+	background-color: #f0f0f0;
+}
+.photo-uploader-btn input {
+	display: none;
+}
+
+.photo-uploader {
+	position: absolute; display: none; margin: auto; top: 5%; left: 0%; right: 0%; width: 90%; max-width: 600px; height: 90%; max-height: 500px;
+	border: solid 1px #9E9E9E; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; overflow: hidden;
+}
+.photo-uploader-inner { display: block; padding: 0px; height: 100%; width: 100%; }
+
+.photo-uploader-image-window { position: relative; display: block; background-color: #c4c4c4; height: 90%; overflow: hidden; cursor: move; }
+.photo-uploader-image {
+	position: absolute; top: 50%; display: block; margin: auto; left: 0%; right: 0%; <!--- max-height: 100%; --->
+	 -webkit-transform: translate(0, -50%); -moz-transform: translate(0, -50%); transform: translate(0, -50%);
+}
+
+.photo-uploader-crop-box-holder { position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%; }
+
+.photo-uploader-zoom-section {
+	position: absolute; display: none; right: 30px; top: 20%; height: 50%; text-align: center; <!--- padding: 10px;
+	background-color: rgba(0,0,0,0.1); ---> -moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px; z-index: 20;
+}
+.photo-uploader-zoom-section-inner { display: block; height: 100%; }
+.photo-uploader-zoom-in, .photo-uploader-zoom-out { display: block; position: relative; height: 15%; }
+.photo-uploader-zoom-in img, .photo-uploader-zoom-out img {
+	display: block; position: relative; top: 50%; opacity: 0.7; height: 18px;
+	-webkit-transform: translate(0, -50%); -moz-transform: translate(0, -50%); transform: translate(0, -50%);
+}
+.photo-uploader-zoom-slider {
+	display: block; height: 70%; text-align: center; box-sizing: border-box; padding: 9px 0px; background-color: rgba(0,0,0,0.3);
+	-moz-border-radius: 15px; -webkit-border-radius: 15px; border-radius: 15px; cursor: s-resize;
+}
+.photo-uploader-zoom-bar { position: relative; display: block; height: 100%; }
+.photo-uploader-zoom-knob {
+	position: absolute; display: block; height: 18px; width: 100%; background-color: #ffffff; top: 0px; left: 0px;
+	-moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;
+	-webkit-transform: translate(0, -50%); -moz-transform: translate(0, -50%); transform: translate(0, -50%);
+}
+
+.photo-uploader-crop-box {
+	position: absolute; display: inline-block; top: 50%; left: 50%; opacity: 0.75; z-index: 10;
+	-webkit-transform: translate(-50%, -50%); -moz-transform: translate(-50%, -50%); transform: translate(-50%, -50%);
+}
+.photo-uploader-crop-box img { display: block; margin: auto; width: 150px; height: 150px; }
+.photo-uploader-crop-box-left, .photo-uploader-crop-box-right, .photo-uploader-crop-box-top, .photo-uploader-crop-box-bottom {
+	position: absolute; height: 500%; width: 500%; top: 0px; background-color: #000000;
+}
+.photo-uploader-crop-box-left { left: auto; right: 100%; }
+.photo-uploader-crop-box-right { left: 100%; right: auto; bottom: 0px; top: auto; }
+.photo-uploader-crop-box-top { left: auto; right: 0px; top: auto; bottom: 100%; }
+.photo-uploader-crop-box-bottom { left: -100%; top: 100%; bottom: auto; }
+
+.photo-uploader-save-section { display: block; font-size: 0px; background-color: #ffffff; height: 10%; }
+.photo-uploader-save-section span, .photo-uploader-save-section a { display: inline-block; vertical-align: middle;  }
+.photo-uploader-btn-cancel, .photo-uploader-btn-save { width: 15%; height: 100%; cursor: pointer; }
+
+.photo-uploader-btn-cancel:hover { background-color: #aeaeae; }
+.photo-uploader-btn-cancel span, .photo-uploader-btn-save span {
+	position: relative; display: block; text-align: center; font-size: 14px; line-height: 14px;color: #ffffff !important;
+	top: 50%; -webkit-transform: translate(0, -50%); -moz-transform: translate(0, -50%); transform: translate(0, -50%);
+}
+.photo-uploader-btn-cancel { background-color: #a2a2a2; }
+.photo-uploader-btn-save { background-color: #a2a2a2; cursor: default; }
+.photo-uploader-btn-save.clickable { background-color: #007def; cursor: pointer; }
+.photo-uploader-btn-save.clickable:hover { background-color: #128eff; }
+
+.photo-uploader-save-msg { width: 70%; text-align: center; font-size: 14px; color: #525252; background-color: #ffffff; }
+</style>
+
+<div class="photo-uploader-shadow-box">
+	<div class="photo-uploader-buttons">
+		<form id="upload-form" action="" enctype="multipart/form-data" method="post">
+			<div class="photo-uploader-btn-label">
+				<div>Choose an image file that <br/>is at least 150x150 pixels.</div>
+			</div>
+			<!--- <div class="photo-uploader-btn photo-uploader-btn-camera">
+				<input id="camera-btn" class="file-input" type="file" name="imgja" accept="image/*"  capture="camera">
+				<label for="camera-btn">Take a photo</label>
+			</div> --->
+			<div class="photo-uploader-btn photo-uploader-btn-file">
+				<input id="file-btn" class="file-input" type="file" name="imgja2" accept="image/*">
+				<label for="file-btn">Choose a File</label>
+			</div>
+			<!--- New Image Dimensions --->
+			<input type="hidden" id="x" name="x" />
+			<input type="hidden" id="y" name="y" />
+			<input type="hidden" id="w" name="w" />
+			<input type="hidden" id="h" name="h" />
+			<input type="hidden" id="tstamp" name="timestamp" />
+			<!--<input type="hidden" id="thisURL" name="thisURL" value="<cfoutput>#cgi.server_name##cgi.script_name#?#cgi.query_string#</cfoutput>" />-->
+
+		</form>
+	</div>
+
+	<div class="photo-uploader">
+		<div class="photo-uploader-inner">
+			<div class="photo-uploader-zoom-section">
+				<div class="photo-uploader-zoom-section-inner">
+					<div class="photo-uploader-zoom-in"><img src="images/crop-plus.svg"></div>
+					<div class="photo-uploader-zoom-slider">
+						<div class="photo-uploader-zoom-bar">
+							<div class="photo-uploader-zoom-knob"></div>
+						</div>
+					</div>
+					<div class="photo-uploader-zoom-out"><img src="images/crop-minus.svg"></div>
+				</div>
+			</div>
+			<div class="photo-uploader-image-window">
+				<img class="photo-uploader-image" src=""/>
+				<div class="photo-uploader-crop-box-holder">
+					<div class="photo-uploader-crop-box">
+						<div class="photo-uploader-crop-box-top"></div>
+						<div class="photo-uploader-crop-box-left"></div>
+						<img src="images/inverse-circle.svg"/>
+						<div class="photo-uploader-crop-box-right"></div>
+						<div class="photo-uploader-crop-box-bottom"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="photo-uploader-save-section">
+				<span class="photo-uploader-btn-cancel"><span>&#10005;</span></span>
+				<span class="photo-uploader-save-msg">Center Your Face in the Circle</span>
+				<span class="photo-uploader-btn-save"><span>&#10003;</span></span>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!--- Selecting / Cropping JS --->
+<script>
+//touch support
+var touchSupport = isTouchDevice();
+//is filereader supported?
+var fileReaderSupport;
+window.FileReader ? fileReaderSupport = true : fileReaderSupport = false;
+
+// global image dimensions
+var touchArea =  $('.photo-uploader-image-window');
+var maxImageWidth = 0;
+var maxImageHeight = 0;
+var maxImageSize = 0;
+var windowLeft, windowTop, windowWidth, windowHeight,
+	imageLeft, imageTop, imageScaledWidth, imageScaledHeight,
+	windowClickStartX, windowClickStartY;
+var dragState = false;
+var minSize = 150;
+
+$(document).ready(function(){
+	$('img').on('dragstart', function(event) { event.preventDefault(); });
+
+	$('.profile-change-pic-btn').on('click',function(){
+		disableScroll();
+		$('.photo-uploader-shadow-box').fadeIn(300);
+	});
+
+	$('.file-input').on('change',function(event){
+		readImageFile(this);
+	});
+
+	//--- crop drag events ---
+	touchArea.on('touchstart mousedown', function(event){
+		dragStart(event);
+	});
+
+	$(document).on('touchmove mousemove', function(event){
+		dragMove(event);
+	});
+
+	$(document).on('touchend mouseup', function(event){
+		var target = $(event.target);
+		if(dragState || zoomDragState){
+			dragEnd(event);
+		}
+		else {
+			if(target.hasClass('photo-uploader-shadow-box')){
+				$('.photo-uploader-shadow-box').fadeOut(300);
+				enableScroll();
+				resetUploader();
+			}
+		}
+	});
+
+	$('.photo-uploader-btn-cancel').on('click',function(){
+		resetUploader();
+	});
+
+
+	//--- zoom slider ---
+	var zoomDragState = false;
+	$('.photo-uploader-zoom-slider').on('touchstart mousedown', function(event){
+		zoomDragState = true;
+	});
+	$(document).on('touchmove mousemove', function(event){
+		if(zoomDragState){
+			zoomDragMove(event);
+		}
+	});
+	$(document).on('touchend mouseup', function(event){
+		zoomDragState = false;
+	});
+
+});
+
+function readImageFile(input){
+	var oFReader = new FileReader();
+	oFReader.readAsDataURL(input.files[0]);
+	//console.log(input);
+
+	oFReader.onload = function (oFREvent) {
+   		loadImageFile(oFREvent.target.result);
+	};
+}
+
+function loadImageFile(target){
+	$('.photo-uploader-buttons').slideUp(300,function(){
+		$('.photo-uploader-image').attr("src",target).css({"max-height":"100%","max-width":"100%"});
+		$('.photo-uploader').slideDown(300,function(){
+			getImgSize(target);
+		});
+	});
+}
+
+function getImgSize(imgSrc) {
+    var newImg = new Image();
+    newImg.onload = function() {
+    	maxImageHeight = newImg.height;
+    	maxImageWidth = newImg.width;
+    	maxImageSize = Math.max(maxImageWidth, maxImageHeight);
+		if(maxImageWidth >= minSize){
+			$('.photo-uploader-save-msg').html("Center Your Face in the Circle");
+			$('.photo-uploader-btn-save').addClass('clickable');
+			initiateZoom();
+		}
+		else {
+			$('.photo-uploader-save-msg').html("<span style='color:red;'>Image too small (min. " + minSize +" x " + minSize +" pixels)</span>");
+			$('.photo-uploader-btn-save').removeClass('clickable');
+		}
+    }
+    newImg.src = imgSrc; // this must be done AFTER setting onload
+    windowWidth = $('.photo-uploader-image-window').width();
+
+
+   	var imageScaledWidth = $('.photo-uploader-image').width();
+   	var offsetX = (windowWidth - imageScaledWidth) / 2;
+   	//$('.photo-uploader-image').stop(true,false).animate({"left":offsetX},100);
+   	$('.photo-uploader-image').css({"left":offsetX,"right":"auto"});
+}
+
+function dragStart(event){
+	dragState = true;
+
+	windowLeft = $('.photo-uploader-image-window').offset().left;
+	windowTop = $('.photo-uploader-image-window').offset().top;
+	windowHeight = $('.photo-uploader-image-window').height();
+   	windowWidth = $('.photo-uploader-image-window').width();
+   	imageLeft = parseInt(($('.photo-uploader-image').css("left")),10);
+   	imageTop = parseInt(($('.photo-uploader-image').css("top")),10);
+   	imageScaledWidth = $('.photo-uploader-image').width();
+   	imageScaledHeight = $('.photo-uploader-image').height();
+
+   	var pointer = getPointerEvent(event);
+	windowClickStartX = pointer.pageX - windowLeft;
+	windowClickStartY = pointer.pageY - windowTop;
+}
+
+function dragMove(event){
+	if(dragState){
+		var pointer = getPointerEvent(event);
+		var framePointerX = pointer.pageX - windowLeft;
+		var framePointerY = pointer.pageY - windowTop;
+		var mouseDiffX = framePointerX - windowClickStartX;
+		var mouseDiffY = framePointerY - windowClickStartY;
+
+		//console.log(pointer.pageX, pointer.pageY);
+		//$('.photo-uploader-save-msg').html(mouseDiffX + " - " + mouseDiffY);
+
+		var newMouseX = imageLeft + mouseDiffX;
+		var newMouseY = imageTop + mouseDiffY;
+
+		$('.photo-uploader-image').css("left",newMouseX);
+		$('.photo-uploader-image').css("top",newMouseY);
+	}
+}
+
+function dragEnd(event){
+	dragState = false;
+
+	var cropCirclePageTop = $('.photo-uploader-crop-box').offset().top;
+   	var cropCirclePageLeft = $('.photo-uploader-crop-box').offset().left;
+   	var cropCircleWidth = $('.photo-uploader-crop-box').width();
+   	var cropCircleHeight = $('.photo-uploader-crop-box').height();
+
+	var imagePageLeft = $('.photo-uploader-image').offset().left;
+   	var imagePageTop = $('.photo-uploader-image').offset().top;
+   	var imageWidth = $('.photo-uploader-image').width();
+ 	var imageHeight = $('.photo-uploader-image').height();
+
+   	if((imagePageLeft + imageWidth) <= (cropCirclePageLeft + cropCircleWidth)){
+   		var offsetX = (windowWidth / 2) - (cropCircleWidth / 2) - (windowWidth - imageWidth);
+   		$('.photo-uploader-image').animate({"left":-offsetX},{ queue: false, duration: 200 });
+   	}
+   	else if(imagePageLeft >= cropCirclePageLeft){
+   		var offsetX = (windowWidth - cropCircleWidth) / 2;
+   		$('.photo-uploader-image').animate({"left":offsetX},{ queue: false, duration: 200 });
+   	}
+
+ 	if((imagePageTop + imageHeight) <= (cropCirclePageTop + cropCircleHeight)){
+   		var offsetY = (windowHeight / 2) - ((imageHeight - cropCircleHeight) / 2);
+   		$('.photo-uploader-image').animate({"top":offsetY},{ queue: false, duration: 200 });
+   	}
+   	else if(imagePageTop >= cropCirclePageTop){
+   		var offsetY = (windowHeight / 2)  + ((imageHeight - cropCircleHeight) / 2);
+   		$('.photo-uploader-image').animate({"top":offsetY},{ queue: false, duration: 200 });
+   	}
+
+   	//$('.photo-uploader-save-msg').html($('.photo-uploader-image').css("top"));
+}
+
+function initiateZoom() {
+	$('.photo-uploader-zoom-section').css({"opacity":"0","display":"inline-block"}).animate({"opacity":"1"},300);
+	var knobHeight = $('.photo-uploader-zoom-knob').height();
+	if(maxImageSize == maxImageHeight){
+		var imageWidth = $('.photo-uploader-image').width();
+		var initialZoom = 1 - (imageWidth / maxImageWidth);
+	}
+	else {
+		var imageHeight = $('.photo-uploader-image').height();
+		var initialZoom = 1 - (imageHeight / maxImageHeight);
+	}
+
+	var zoomBarHeight = $('.photo-uploader-zoom-bar').height();
+	initialZoom = initialZoom * zoomBarHeight;
+	$('.photo-uploader-zoom-knob').css("top",initialZoom);
+
+}
+
+function zoomDragMove(event){
+	$('.photo-uploader-image').css({"max-height":"none","max-width":"none"});
+
+	var pointer = getPointerEvent(event);
+	var zoomBarPageTop = $('.photo-uploader-zoom-bar').offset().top;
+	var zoomBarHeight = $('.photo-uploader-zoom-bar').height();
+	var newKnobPos = pointer.pageY - zoomBarPageTop;
+
+	if(newKnobPos >= 0 && newKnobPos <= zoomBarHeight){
+		$('.photo-uploader-zoom-knob').css('top',newKnobPos);
+		resizeImage(newKnobPos, zoomBarHeight);
+	}
+	else if(newKnobPos > zoomBarHeight){
+		$('.photo-uploader-zoom-knob').css('top',zoomBarHeight);
+		resizeImage(zoomBarHeight, zoomBarHeight);
+	}
+	else {
+		$('.photo-uploader-zoom-knob').css('top',"0");
+		resizeImage(0, zoomBarHeight);
+	}
+}
+
+function resizeImage(knobPos, zoomBarHeight){
+	var scalePerc = 1 - (knobPos / zoomBarHeight);
+	if(maxImageSize == maxImageHeight){
+		//--- width
+		var newSize = ((maxImageWidth - minSize) * scalePerc) + minSize;
+		$('.photo-uploader-image').width(newSize).css("height","auto");;
+	}
+	else {
+		//--- height
+		var newSize = ((maxImageHeight - minSize) * scalePerc) + minSize;
+		$('.photo-uploader-image').height(newSize).css("width","auto");
+	}
+}
+
+function resetUploader(){
+	$('.photo-uploader').fadeOut(200,function(){
+		$('.photo-uploader-buttons').fadeIn(200);
+		$('.photo-uploader-image').attr("src","").css({"left":"0%","right":"0%","width":"auto","height":"auto"});
+	});
+
+}
+
+
+//---detect touch support
+function isTouchDevice() {
+ return (('ontouchstart' in window)
+      || (navigator.MaxTouchPoints > 0)
+      || (navigator.msMaxTouchPoints > 0));
+}
+
+function getPointerEvent(event) {
+    return event.originalEvent.targetTouches ? event.originalEvent.targetTouches[0] : event;
+}
+
+//--- DISABLE / ENABLE PAGE SCROLLING ---
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+function enableScroll() {
+    if (window.removeEventListener)
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.onmousewheel = document.onmousewheel = null;
+    window.onwheel = null;
+    window.ontouchmove = null;
+    document.onkeydown = null;
+}
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+  e.returnValue = false;
+}
+
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+//--- end DISABLE / ENABLE PAGE SCROLLING ---
+</script>
+
+<!--- Uploading JS --->
+<script>
+$(document).ready(function(){
+	$(document).on('click','.photo-uploader-btn-save.clickable',function(){
+		setInfo();
+	});
+});
+
+function setInfo() {
+	var cropCirclePageTop = $('.photo-uploader-crop-box').offset().top;
+   	var cropCirclePageLeft = $('.photo-uploader-crop-box').offset().left;
+   	var cropCircleWidth = $('.photo-uploader-crop-box').width();
+   	var cropCircleHeight = $('.photo-uploader-crop-box').height();
+
+	var imagePageLeft = $('.photo-uploader-image').offset().left;
+   	var imagePageTop = $('.photo-uploader-image').offset().top;
+   	var imageWidth = $('.photo-uploader-image').width();
+ 	var imageHeight = $('.photo-uploader-image').height();
+
+ 	var cropRatio = maxImageWidth / imageWidth;
+ 	var newLeft = (cropCirclePageLeft - imagePageLeft) * cropRatio;
+	var newTop = (cropCirclePageTop - imagePageTop) * cropRatio;
+	var newWidth = cropCircleWidth * cropRatio;
+	var newHeight = cropCircleHeight * cropRatio;
+
+	//console.log(cropRatio, newLeft, newTop, newWidth, newHeight);
+
+	$('#x').val(newLeft);
+	$('#y').val(newTop);
+	$('#w').val(newWidth);
+	$('#h').val(newHeight);
+	var pathname = $(location).attr('href');
+	//$('#thisURL').val(pathname+'&'+$('#formData').text());
+
+	cropImage();
+}
+
+function cropImage(){
+	<!--- if(window.location.href == "https://www.humanatic.com/pages/humfun/humanatic_101.cfm"){
+	    $('#upload-form').submit();
+		window.location = "https://www.humanatic.com/pages/humfun/humanatic_101.cfm?profile";
+	} else { --->
+		if (typeof pageTimer !== 'undefined') {
+			$('#tstamp').val(pageTimer);
+		}
+
+
+		$('#upload-form').submit();
+	<!--- } --->
+
+
+	<!--- $.ajax({
+		type: "POST",
+		url: "photo_cropper_upload.cfm",
+		data: {
+
+		},
+		beforeSend: function(){
+			console.log("sending");
+		},
+		success: function(data) {
+
+		}
+	}); --->
+}
+
+</script>
